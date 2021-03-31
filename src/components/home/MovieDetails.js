@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchMovieDetails, setLoading } from '../../actions/searchAction';
+import Spinner from '../layout/Spinner';
 
 class MovieDetails extends Component {
 	componentDidMount() {
@@ -10,16 +11,15 @@ class MovieDetails extends Component {
 	}
 
 	render() {
-		const { movie } = this.props;
-		console.log('Movie:', movie);
+		const { movie, loading } = this.props;
 
-		return (
+		const renderDetails = (
 			<div className="container mt-5">
 				<div className="row d-flex align-items-center">
 					<div className="col-md-4 card card-body">
 						<img src={movie.Poster} className="thumbnail" alt="Poster" />
 					</div>
-					<div className="col-md-8">
+					<div className="col-md-8 text-center">
 						<h2 className="mb-4">{movie.Title}</h2>
 						<ul className="list-group">
 							<li className="list-group-item">
@@ -68,6 +68,10 @@ class MovieDetails extends Component {
 				</div>
 			</div>
 		);
+
+    const movieInfo = loading ? <Spinner /> : renderDetails;
+    
+		return <>{movieInfo}</>;
 	}
 }
 
